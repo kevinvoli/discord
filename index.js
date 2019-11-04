@@ -39,3 +39,21 @@ register.on('connection',(socket)=>{
         socket.emit('inscription',result)
     })
 })
+
+const inscription = io.of('/')
+
+inscription.on('connection',(socket)=>{
+    console.log('connecte toi')
+    socket.on('connecte',async(data)=>{
+        console.log(data)
+        const result= await userQueries.getUsers(data)
+        if (result.etat===null){
+            let erreur= 'error'
+            socket.emit('connecte',erreur)
+        }else{
+            console.log(result)
+            socket.emit('connecte',result) 
+        }
+       
+    })
+})
