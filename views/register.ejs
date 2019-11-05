@@ -79,20 +79,11 @@
 							avez-vous deja 
 						</span>
 
-						<a href="#" class="txt2 hov1">
+						<a href="/" class="txt2 hov1">
 							 un compte?
 						</a>
 					</div>
 
-					<div class="text-center">
-						<span class="txt1">
-							Creer un compte?
-						</span>
-
-						<a href="#" class="txt2 hov1">
-							Se connecter
-						</a>
-					</div>
 				</form>
 			</div>
 		</div>
@@ -120,25 +111,25 @@
 
 	<script>
 
-			const socket= io('http://localhost:3000/register')
-			$('.validate-form').on('submit',(e)=>{
-				e.preventDefault()
-		
-				let	data={
-						nom:$('#nom').val(),
-						pseudo:$('#pseudo').val(),
-						password:$('#password').val(),
-						email:$('#email').val(),
-						number:$('#number').val()
-					}
-				socket.emit('inscription',data)
-			})	
-			socket.on('inscription',(data)=>{
-				console.log(data)
-			})
+		const socket= io('http://localhost:3000/register')
+		$('.validate-form').on('submit',(e)=>{
+			e.preventDefault()
+	
+			let	data={
+				nom:$('#nom').val(),
+				pseudo:$('#pseudo').val(),
+				password:$('#password').val(),
+				email:$('#email').val(),
+				number:$('#number').val()
+			}
+			socket.emit('inscription',data)
+		})	
+		socket.on('inscription',(data)=>{
+			location.href="/"
+		})
 			
 		
-			</script>
+</script>
 
 </body>
 </html>

@@ -1,35 +1,36 @@
 const express= require('express')
-const session= require('express-session')
+const app= express()
+server = require("http").createServer(app)
+io= require('socket.io')(server)
+session = require("express-session")({
+    secret: "my-secret",
+    resave: true,
+    saveUninitialized: true
+}),
+
+sharedsession = require("express-socket.io-session");
 const mongoose = require('mongoose')
 const ejs = require('ejs')
-const app= express()
+
 const route=require('./routes')
 const {userQueries}= require('./controllers/user.controllers')
-
-
 
 
 const http= require('http').createServer(app)
 app.use('/public', express.static('./public') )
 app.set('views','./views')
 app.set('view engine', 'ejs' )
-
+app.use(session)
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(session({
-    secret:"dcdvnhjdfjghnkbfkfd09685554311nbfrk1É122FDVJHN&É(-È_Ç",
-    resave:false,
-    saveUninitialized:false
-}))
-
 app.use(route)
 
 const db= require('./setting/dabase')
 db()
 
-const io= require('socket.io').listen(http.listen(3000,()=>{
-    console.log('salut bro')
-}))
+
+
+
 
 const register= io.of('/register')
 register.on('connection',(socket)=>{
@@ -40,7 +41,9 @@ register.on('connection',(socket)=>{
     })
 })
 
-const inscription = io.of('/')
+const inscription = io.of('/').use(sharedsession(session, {
+
+}));
 
 inscription.on('connection',(socket)=>{
     console.log('connecte toi')
@@ -51,9 +54,29 @@ inscription.on('connection',(socket)=>{
             let erreur= 'error'
             socket.emit('connecte',erreur)
         }else{
-            console.log(result)
-            socket.emit('connecte',result) 
+            socket.handshake.session.chat= result.etat
+            socket.handshake.session.save();
+            socket.emit('connecte',result.etat)
         }
-       
     })
+    socket.on('deco',(data)=>{
+
+    })
+})
+const deconection = io.of('/chat').use(sharedsession(session, {}));
+deconection.on('connection',(socket)=>{
+    socket.on('deco',async(data)=>{
+        console.log(data)
+        if(socket.handshake.session.chat){
+            const res= await userQueries.getOneUserId(data)
+            delete socket.handshake.session.chat
+            socket.handshake.session.save()
+        }
+        socket.emit('deconecter')
+    })
+})
+
+
+server.listen(3000,()=>{
+    console.log('cool le bossss')
 })

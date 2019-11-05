@@ -19,10 +19,13 @@ exports.userQueries= class{
     }
     static getUsers(datas){
         return new Promise(async(next)=>{
-           const user= User.findOne({
+          User.findOne({
+                password: datas.password,
                 email:datas.email,
-                password: datas.password
+                
             }).then((user)=>{
+                user.status='Online'
+                user.save()
                 next({
                     etat : user
                 })
@@ -33,6 +36,26 @@ exports.userQueries= class{
             })
         })
        
+    }
+    static getOneUserId(data){
+        return new Promise(async(next)=>{
+            User.findById(data).then((user)=>{
+                user.status= 'Offline'
+                user.save()
+                next( user)
+            }).catch((err)=>{
+                next(err)
+            })
+        })
+    }
+    static getallUsers(data){
+        return new Promise(async(next)=>{
+            User.find({}).then((users)=>{
+                next(
+                    users
+                )
+            })
+        })
     }
 }
 

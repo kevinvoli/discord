@@ -109,7 +109,7 @@
 	<script>
 
 		const socket= io('http://localhost:3000/')
-		$('.validate-form').on('submit',(e)=>{
+	$('.validate-form').on('submit',(e)=>{
 			e.preventDefault()
 			
 			let	data={
@@ -120,11 +120,11 @@
 		})	
 		socket.on('connecte',(data)=>{
 			if(data==='error'){
-				document.querySelector('#error').style.display='block'
-				document.querySelector('#affiche-error').innerText=data
 				console.log(data)
 			}else{
-				
+				socket.on('connecte',(data)=>{
+					location.href= "/chat"
+				})
 			}
 		})
 				
