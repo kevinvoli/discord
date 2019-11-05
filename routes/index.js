@@ -23,7 +23,7 @@ router.route('/chat')
 
         res.render('chat',{
             users:users,
-            user:req.session.chat
+            user :req.session.chat
         })
     }else{
         res.redirect('/')

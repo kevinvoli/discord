@@ -687,6 +687,7 @@ background: #435f7a;
 outline: none;
 }
 </style></head><body>
+  
 <!-- 
 
 A concept for a chat interface. 
@@ -731,12 +732,15 @@ Website: http://emilcarlsson.se/
             <input type="text" placeholder="Search contacts..." />
         </div>
         <div id="contacts">
+                <div class="alert alert-success">
+                        <p></p>
+                    </div>
             <ul>
                 <% users.forEach(function(User){ %>
-                    <% if (User!==user) {%>
+                  <% if(User._id !== user._id) {%>
                     <li class="contact">
                             <div class="wrap">
-                                <span class="contact-status online"></span>
+                                <span class="contact-status <%=User.status%>"></span>
                                 <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
                                 <div class="meta">
                                     <p class="name"><%=User.pseudo%></p>
@@ -744,8 +748,7 @@ Website: http://emilcarlsson.se/
                                 </div>
                             </div>
                         </li>
-                    <% }%>
-                    
+                  <% }%>
                <% }) %>
                 <li class="contact">
                     <div class="wrap">
@@ -783,7 +786,7 @@ Website: http://emilcarlsson.se/
                         <img src="http://emilcarlsson.se/assets/donnapaulsen.png" alt="" />
                         <div class="meta">
                             <p class="name">Donna Paulsen</p>
-                            <p class="preview">Mike, I know everything! I'm Donna..</p>
+                            <p class="preview">Mike, I know everything! I m Donna..</p>
                         </div>
                     </div>
                 </li>
@@ -922,6 +925,9 @@ Website: http://emilcarlsson.se/
     socket.emit('deco',data)
     socket.on('deconecter',(data)=>{
         location.href= "/chat"
+    })
+    socket.on('userDeco',(data)=>{
+        $('alert-success p').text(`${data.pseudo} vient de ce connecte`)
     })
     }
 

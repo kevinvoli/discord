@@ -65,6 +65,7 @@ inscription.on('connection',(socket)=>{
 })
 const deconection = io.of('/chat').use(sharedsession(session, {}));
 deconection.on('connection',(socket)=>{
+    deconection.emit('userDeco',socket.handshake.session.chat)
     socket.on('deco',async(data)=>{
         console.log(data)
         if(socket.handshake.session.chat){
@@ -74,6 +75,7 @@ deconection.on('connection',(socket)=>{
         }
         socket.emit('deconecter')
     })
+
 })
 
 

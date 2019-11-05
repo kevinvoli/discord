@@ -42,7 +42,7 @@ exports.userQueries= class{
             User.findById(data).then((user)=>{
                 user.status= 'Offline'
                 user.save()
-                next( user)
+                next({ user})
             }).catch((err)=>{
                 next(err)
             })
