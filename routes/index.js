@@ -1,5 +1,6 @@
 const express= require('express')
 const {userQueries}= require('../controllers/user.controllers')
+const {messageQueries}= require('../controllers/message.controllers')
 const router =new express.Router()
 
 router.route('/')
@@ -13,17 +14,20 @@ router.route('/register')
     res.render('register')
 })
 
-
-
 router.route('/chat')
 .get(async(req,res)=>{
     let users= await userQueries.getallUsers()
     console.log("session dcdDEFVGHH:",req.session.chat)
     if(req.session.chat){
+        
+        let  message=await messageQueries.getAllMassage()
+       
+        console.log("TOUS LES MESSAGE",message)
 
         res.render('chat',{
             users:users,
-            user :req.session.chat
+            user :req.session.chat,
+            messages:message
         })
     }else{
         res.redirect('/')

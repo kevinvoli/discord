@@ -8,7 +8,7 @@ const UserShema= new mongoose.Schema({
     password: {type:String,require:true},
     email:  {type:String,require:true, unique:true},
     number:  {type:String,require:true},
-    status: {type:String,default:'offline'}
+    status: {type:String,default:'Offline'}
 })
 
 module.exports= mongoose.model('user', UserShema)

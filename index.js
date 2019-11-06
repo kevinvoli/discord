@@ -1,5 +1,6 @@
 const express= require('express')
 const app= express()
+relationship = require("mongoose-relationship")
 server = require("http").createServer(app)
 io= require('socket.io')(server)
 session = require("express-session")({
@@ -9,11 +10,12 @@ session = require("express-session")({
 }),
 
 sharedsession = require("express-socket.io-session");
-const mongoose = require('mongoose')
+mongoose = require('mongoose')
 const ejs = require('ejs')
 
 const route=require('./routes')
 const {userQueries}= require('./controllers/user.controllers')
+const {messageQueries}= require('./controllers/message.controllers')
 
 
 const http= require('http').createServer(app)
@@ -29,9 +31,6 @@ const db= require('./setting/dabase')
 db()
 
 
-
-
-
 const register= io.of('/register')
 register.on('connection',(socket)=>{
     console.log('tu est connecte')
@@ -40,7 +39,6 @@ register.on('connection',(socket)=>{
         socket.emit('inscription',result)
     })
 })
-
 const inscription = io.of('/').use(sharedsession(session, {
 
 }));
@@ -74,6 +72,12 @@ deconection.on('connection',(socket)=>{
             socket.handshake.session.save()
         }
         socket.emit('deconecter')
+    })
+    socket.on('sendMessage',async(data)=>{
+        console.log("LES DATA",data)
+        const result= await messageQueries.setMesage(data)
+        console.log("LE MESSAGE",result)
+        deconection.emit('evoiMssage',result)
     })
 
 })

@@ -1,4 +1,5 @@
-const User=require('../models/users.model')
+// const User=require('../models/users.model')
+const User=require('../models/index').User
 exports.userQueries= class{
     static setUser(data){
         return new Promise(async(next)=>{
@@ -48,7 +49,7 @@ exports.userQueries= class{
             })
         })
     }
-    static getallUsers(data){
+    static getallUsers(){
         return new Promise(async(next)=>{
             User.find({}).then((users)=>{
                 next(
