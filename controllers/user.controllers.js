@@ -23,7 +23,6 @@ exports.userQueries= class{
           User.findOne({
                 password: datas.password,
                 email:datas.email,
-                
             }).then((user)=>{
                 user.status='Online'
                 user.save()
@@ -60,3 +59,4 @@ exports.userQueries= class{
     }
 }
 
+// loopback
