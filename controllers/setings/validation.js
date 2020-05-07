@@ -1,22 +1,33 @@
-const { check, validationResult } = require('express-validator');
+module.exports = function(){
+    return {
+        inscriptionValidation:(req, res, next)=>{
+        req.checkBody('nom','name is requere').notEmpty()
+        req.checkBody('password','name is requere').isLength({min:4});
+        req.checkBody('pseudo','name is requere').notEmpty()
+        req.checkBody('email','name is requere').isEmail()
+        req.checkBody('number','name is requere').notEmpty()
 
 
-module.exports= function validation(data){
-    console.log(data)
-
-        return new Promise(async(next)=>{
-        (()=>{
-            check('data.email').isEmail()
-            check('data.number').isEmpty().isMobilePhone()
-            check('password').isLength({ min: 5 })  
-        }).then((result)=>{
-            console.log(result)
-            next(result)
-        }).catch((errors)=>{
-            console.log(errors)
-            next(errors)
-        })
-
-    })
-   
+        req.getValidationResult()
+            .then((result)=>{
+                const errors= result.array()
+                const messages= [];
+                errors.forEach(error => {
+                    messages/push(error.msg)
+                });
+                req.flesh('error',messages)
+            }).catch((err)=>{
+                return next() 
+            })
+    }
 }
+}
+
+
+
+ 
+
+
+
+
+

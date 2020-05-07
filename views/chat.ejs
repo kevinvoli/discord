@@ -179,7 +179,7 @@ Website: http://emilcarlsson.se/
             $('<li class="sent"><img src="<%= user.image%>" alt="" /><p>' + data.message + '</p></li>').appendTo($('.messages ul'));
             $('.message-input input').val(null);
             $('.contact.active .preview').html('<span>You: </span>' + data.message);
-            $(".messages").animate({ scrollTop: $(document).height()});
+            $(".messages").animate({ scrollTop: $(document).height});
         }
 
     })
@@ -194,8 +194,9 @@ Website: http://emilcarlsson.se/
 </script>
 
 
+
 <script >
-$(".messages").animate({ scrollTop: $(document).bottom() }, "swing");
+$(".messages").animate({ scrollTop: $(document) });
 
 $("#profile-img").click(function() {
     $("#status-options").toggleClass("active");

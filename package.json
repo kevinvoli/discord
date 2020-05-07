@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
@@ -16,6 +20,11 @@
     "express-validator": "^6.2.0",
     "mongoose": "^5.7.7",
     "mongoose-relationship": "^0.1.5",
-    "socket.io": "^2.3.0"
+    "nodemailer": "^6.3.1",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "socket.io": "^2.3.0",
+    "xoauth2": "^1.2.0"
   }
 }

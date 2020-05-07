@@ -1,13 +1,22 @@
 const express= require('express')
 const app= express()
+const bodyParser= require('body-parser')
+const cookieParser= require('cookie-parser')
+flash =require('connect-flash')
+ passport = require('passport') 
+let validator=require('express-validator');
 relationship = require("mongoose-relationship")
 server = require("http").createServer(app)
 io= require('socket.io')(server)
+
+
+
 session = require("express-session")({
-    secret: "my-secret",
+    secret: "adezflhe12hedàçcdij",
     resave: true,
     saveUninitialized: true
 }),
+
 
 sharedsession = require("express-socket.io-session");
 mongoose = require('mongoose')
@@ -16,19 +25,33 @@ const ejs = require('ejs')
 const route=require('./routes')
 const {userQueries}= require('./controllers/user.controllers')
 const {messageQueries}= require('./controllers/message.controllers')
-
+// require('./passport/passport-local')
 
 const http= require('http').createServer(app)
+// app.use(validator())
+// app.use(flash)
 app.use('/public', express.static('./public') )
+app.use(cookieParser())
 app.set('views','./views')
 app.set('view engine', 'ejs' )
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}));
+
+
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(session)
+app.use(flash())
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(route)
 
 const db= require('./setting/dabase')
 db()
+
+ // create reusable transporter object using the default SMTP transport
 
 
 const register= io.of('/register')
@@ -40,9 +63,7 @@ register.on('connection',(socket)=>{
     })
 })
 const inscription = io.of('/').use(sharedsession(session, {
-
 }));
-
 inscription.on('connection',(socket)=>{
     console.log('connecte toi')
     socket.on('connecte',async(data)=>{
@@ -52,13 +73,11 @@ inscription.on('connection',(socket)=>{
             let erreur= 'error'
             socket.emit('connecte',erreur)
         }else{
+            console.log('le resultar de connection',result)
             socket.handshake.session.chat= result.etat
             socket.handshake.session.save();
             socket.emit('connecte',result.etat)
         }
-    })
-    socket.on('deco',(data)=>{
-
     })
 })
 const deconection = io.of('/chat').use(sharedsession(session, {}));
@@ -79,10 +98,8 @@ deconection.on('connection',(socket)=>{
         console.log("LE MESSAGE",result)
         deconection.emit('evoiMssage',result)
     })
-
 })
-
-
-server.listen(3000,()=>{
-    console.log('cool le bossss')
+const port= 3000
+server.listen(port,()=>{
+    console.log('cool le bossss',port)
 })

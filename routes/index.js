@@ -8,7 +8,6 @@ router.route('/')
     res.render('index')
 })
 
-
 router.route('/register')
 .get((req,res)=>{
     res.render('register')
@@ -17,13 +16,10 @@ router.route('/register')
 router.route('/chat')
 .get(async(req,res)=>{
     let users= await userQueries.getallUsers()
-    console.log("session dcdDEFVGHH:",req.session.chat)
     if(req.session.chat){
-        
+        console.log("ma session existe")
         let  message=await messageQueries.getAllMassage()
-       
         console.log("TOUS LES MESSAGE",message)
-
         res.render('chat',{
             users:users,
             user :req.session.chat,
@@ -34,7 +30,4 @@ router.route('/chat')
     }
    
 })
-
-
-
 module.exports= router

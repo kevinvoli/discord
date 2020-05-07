@@ -9,9 +9,14 @@ exports.SchemaUsers= new mongoose.Schema({
   date:{type:Date, default:Date.now},
   reponse:[{ type:mongoose.Schema.ObjectId, ref:'reponse-ref' } ],
   message:[{ type:mongoose.Schema.ObjectId, ref:'message-ref' }],
-  status:{type: String, default:'Offline' }
+  status:{type: String, default:'Offline' },
+  facebook:{type:String, default:''},
+  googleTokens:Array
 
 })
+
+
+
 
 exports.modelsMessage= new mongoose.Schema({
     message:{type: String, default:''},
