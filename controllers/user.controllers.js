@@ -24,25 +24,15 @@ exports.userQueries= class{
             }).then(async(user)=>{
 
                 console.log('salut 1',user)
-                 let compar= await bcrypt.compare(datas.password,user.password,(err,res)=>{
-                    console.log("dszdfcdcdcsc",err)
-                    console.log('AASQSQSQSD',res)
-                    if (err) {
-                        console.log(err)
-                        return res
-                    }else{
-                        console.log('salut res',res)
-                        user.status='Online'
-                        user.save()
-                        return res
-                    }
-                })()
-                console.log("cool marche bien:",compar)
-                if(compar===true){ 
-                    next(user)
-                }else{
-                    next(`echeec de l'enregistrement`)
-                }
+               const compare= await bcrypt.compareSync(datas.password,user.password)
+               if(compare){
+                console.log('salut res',compare)
+                user.status='Online'
+                user.save()
+                next(user)
+               }else{
+                   next({etat:"echec d'autantification"})
+               }
             }).catch((err)=>{
                 next({
                     etat:err

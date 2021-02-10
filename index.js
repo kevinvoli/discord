@@ -3,7 +3,7 @@ const app= express()
 const bodyParser= require('body-parser')
 const cookieParser= require('cookie-parser')
 flash =require('connect-flash')
- passport = require('passport') 
+passport = require('passport') 
 let validator=require('express-validator');
 relationship = require("mongoose-relationship")
 server = require("http").createServer(app)
@@ -18,7 +18,6 @@ session = require("express-session")({
 }),
 
 
-sharedsession = require("express-socket.io-session");
 mongoose = require('mongoose')
 const ejs = require('ejs')
 
@@ -48,11 +47,13 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(route)
 
+sharedsession = require("express-socket.io-session");
+
+
 const db= require('./setting/dabase')
 db()
 
  // create reusable transporter object using the default SMTP transport
-
 
 const register= io.of('/register')
 register.on('connection',(socket)=>{
@@ -62,33 +63,35 @@ register.on('connection',(socket)=>{
         socket.emit('inscription',result)
     })
 })
-const inscription = io.of('/').use(sharedsession(session, {
-}));
+const inscription = io.of('/').use(sharedsession(session));
 inscription.on('connection',(socket)=>{
+    console.log('ma session socket:',socket.handshake.session)
     console.log('connecte toi')
     socket.on('connecte',async(data)=>{
         console.log(data)
         const result= await userQueries.getUsers(data)
-        if (result.etat===null){
+        if (result.etat){
+            console.log('echec de connection',result.etat)
             let erreur= 'error'
             socket.emit('connecte',erreur)
         }else{
             console.log('le resultar de connection',result)
-            socket.handshake.session.chat= result.etat
+            socket.handshake.session.chat= result
             socket.handshake.session.save();
+            console.log('ma session socket:',socket.handshake.session)
             socket.emit('connecte',result.etat)
         }
     })
 })
-const deconection = io.of('/chat').use(sharedsession(session, {}));
+const deconection = io.of('/chat').use(sharedsession(session));
 deconection.on('connection',(socket)=>{
     deconection.emit('userDeco',socket.handshake.session.chat)
     socket.on('deco',async(data)=>{
         console.log(data)
         if(socket.handshake.session.chat){
             const res= await userQueries.getOneUserId(data)
-            delete socket.handshake.session.chat
-            socket.handshake.session.save()
+            // delete socket.handshake.session.chat
+            // socket.handshake.session.save()
         }
         socket.emit('deconecter')
     })

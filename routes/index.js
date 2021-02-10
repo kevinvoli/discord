@@ -5,6 +5,10 @@ const router =new express.Router()
 
 router.route('/')
 .get((req,res)=>{
+    console.log('bien validé',req.session)
+    if (req.session.chat) {
+        res.redirect('/chat')
+    }
     res.render('index')
 })
 
@@ -17,7 +21,7 @@ router.route('/chat')
 .get(async(req,res)=>{
     let users= await userQueries.getallUsers()
     if(req.session.chat){
-        console.log("ma session existe")
+        console.log("ma session existe",req.session.chat)
         let  message=await messageQueries.getAllMassage()
         console.log("TOUS LES MESSAGE",message)
         res.render('chat',{
