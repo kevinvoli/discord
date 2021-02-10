@@ -1,37 +1,44 @@
-
 document.querySelector(".messages").animate({ scrollTop: document });
 
-document.querySelector("#profile-img").click(function() {
-    document.querySelector("#status-options").toggleClass("active");
+document.querySelector("#profile-img").addEventListener('click',(e)=> {
+    document.querySelector("#status-options").classList.toggle("active");
 });
 
-document.querySelector(".expand-button").click(function() {
-    document.querySelector("#profile").toggleClass("expanded");
-    document.querySelector("#contacts").toggleClass("expanded");
+document.querySelector(".expand-button").addEventListener('click',(e)=>{
+    document.querySelector("#profile").classList.toggle("expanded");
+    document.querySelector("#contacts").classList.toggle("expanded");
 });
 
-document.querySelector("#status-options ul li").click(function() {
-    document.querySelector("#profile-img").removeClass();
-    document.querySelector("#status-online").removeClass("active");
-    document.querySelector("#status-away").removeClass("active");
-    document.querySelector("#status-busy").removeClass("active");
-    document.querySelector("#status-offline").removeClass("active");
-    document.querySelector(this).addClass("active");
-	
-    if($("#status-online").hasClass("active")) {
-        document.querySelector("#profile-img").addClass("online");
-    } else if ($("#status-away").hasClass("active")) {
-        document.querySelector("#profile-img").addClass("away");
-    } else if ($("#status-busy").hasClass("active")) {
-        document.querySelector("#profile-img").addClass("busy");
-    } else if ($("#status-offline").hasClass("active")) {
-        document.querySelector("#profile-img").addClass("offline");
-    } else {
-        document.querySelector("#profile-img").removeClass();
-    };
-	
-    document.querySelector("#status-options").removeClass("active");
-});
+let status= document.querySelectorAll("#status-options ul li")
+
+status.forEach((stat)=>{
+    stat.addEventListener('click',(e)=>{
+        document.querySelector("#profile-img").classList.remove();
+        document.querySelector("#status-online").classList.remove("active");
+        document.querySelector("#status-away").classList.remove("active");
+        document.querySelector("#status-busy").classList.remove("active");
+        document.querySelector("#status-offline").classList.remove("active");
+        
+        stat.classList.add("active");
+        
+        if(document.querySelector("#status-online")
+        .classList.contains("active")) {
+            document.querySelector("#profile-img").classList.add("online");
+        } else if (document.querySelector("#status-away").classList.contains("active")) {
+            document.querySelector("#profile-img").classList.add("away");
+        } else if (document.querySelector("#status-busy").classList.contains("active")) {
+            document.querySelector("#profile-img").classList.add("busy");
+        } else if (document.querySelector("#status-offline").classList.contains("active")) {
+            document.querySelector("#profile-img").classList.add("offline");
+        } else {
+            document.querySelector("#profile-img").classList.remove();
+        };
+        
+        document.querySelector("#status-options").classList.remove("active");
+    });
+})
+
+
 
 window.addEventListener('onkeydown', function(e) {
 if (e.which == 13) {

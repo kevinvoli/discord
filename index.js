@@ -90,8 +90,8 @@ deconection.on('connection',(socket)=>{
         console.log(data)
         if(socket.handshake.session.chat){
             const res= await userQueries.getOneUserId(data)
-            // delete socket.handshake.session.chat
-            // socket.handshake.session.save()
+            delete socket.handshake.session.chat
+            socket.handshake.session.save()
         }
         socket.emit('deconecter')
     })

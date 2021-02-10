@@ -30,8 +30,10 @@
         if (monId===data.Users) {
             let messages=`<li class="replies"><img src="<%= user.image%>" alt="" /><p>  ${data.message} </p></li>`
             let ul= document.querySelector('.messages ul').innerHTML.split()
-            document.querySelector('.messages ul').innerHTML=ul.push(messages).toString()
+            ul.push(messages).toString()
+            document.querySelector('.messages ul').innerHTML= ul
             document.querySelector('.message-input input').value=null;
+            
             // document.querySelector('.message-input input');
             // document.querySelector('.contact.active .preview').innerHTML='<span>You: </span>' + data.message
             document.querySelector('.message-input input');
@@ -50,6 +52,7 @@
     const ecritur= ()=>{
         let input = document.querySelector(".message-input input")
         input.addEventListener('keyup',(e)=>{
+            socket.emit('userWrit')
            console.log(e)
         })
     }
