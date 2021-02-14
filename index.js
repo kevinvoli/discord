@@ -55,27 +55,25 @@ db()
 
  // create reusable transporter object using the default SMTP transport
 
-const register= io.of('/register')
+
+ const register= io.of('/register')
 register.on('connection',(socket)=>{
-    console.log('tu est connecte')
+ 
     socket.on('inscription', async(data)=>{
         const result= await userQueries.setUser(data)
         socket.emit('inscription',result)
     })
 })
 const inscription = io.of('/').use(sharedsession(session));
-inscription.on('connection',(socket)=>{
-    console.log('ma session socket:',socket.handshake.session)
-    console.log('connecte toi')
+inscription.on('connection',(socket)=>{  
+
     socket.on('connecte',async(data)=>{
         console.log(data)
         const result= await userQueries.getUsers(data)
         if (result.etat){
-            console.log('echec de connection',result.etat)
             let erreur= 'error'
             socket.emit('connecte',erreur)
         }else{
-            console.log('le resultar de connection',result)
             socket.handshake.session.chat= result
             socket.handshake.session.save();
             console.log('ma session socket:',socket.handshake.session)
@@ -100,6 +98,20 @@ deconection.on('connection',(socket)=>{
         const result= await messageQueries.setMesage(data)
         console.log("LE MESSAGE",result)
         deconection.emit('evoiMssage',result)
+    })
+    socket.on('statusChange',async(status)=>{
+        const data= {
+            id: socket.handshake.session.chat._id,
+            status:status
+        }
+        const res= await userQueries.getOneUserId(data)
+        const donne = {
+            id:res.user._id,
+            status: res.user.status
+        }
+
+        console.log('status change avec success',res)
+        socket.broadcast.emit('refreshStatus',donne)
     })
 })
 const port= 3000

@@ -1,8 +1,8 @@
 const express= require('express')
 const mongoose = require('mongoose')
+const Schema= mongoose.Schema
 
-
-const UserShema= new mongoose.Schema({
+const UserShema= new Schema({
     nom:  {type:String,require:true},
     pseudo: {type:String,require:true},
     password: {type:String,require:true},
@@ -11,4 +11,5 @@ const UserShema= new mongoose.Schema({
     status: {type:String,default:'Offline'}
 })
 
-module.exports= mongoose.model('user', UserShema)
+const User= mongoose.model('user',UserShema)
+module.exports= User

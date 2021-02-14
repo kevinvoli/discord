@@ -47,11 +47,14 @@ Website: http://emilcarlsson.se/
                     </ul>
                 </div>
                 <div id="expanded">
-                    <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
-                    <input name="twitter" type="text" value="mikeross" />
+                    <label for="facebook"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+                    <input name="facebook" type="text" value="mikeross" />
                     <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
                     <input name="twitter" type="text" value="ross81" />
-                     <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i><button class="deconnection" onclick="deconection('<%=user._id%>')" >deconnection</button></label>
+                     <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i>
+                    </label>
+                    <button class="deconnection" onclick="deconection('<%=user._id%>')" >deconnection</button>
+
                
                 </div>
             </div>
@@ -72,7 +75,7 @@ Website: http://emilcarlsson.se/
                    
                 <li class="contact">
                         <div class="wrap">
-                            <span class="contact-status <%=User.status %> "></span>
+                            <span class="contact-status <%=User.status %>  a<%=User._id %> " ></span>
                             <img src="<%=User.image %>" alt="" />
                             <div class="meta">
                                 <p class="name"><%=User.pseudo%></p>

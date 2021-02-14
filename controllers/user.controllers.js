@@ -42,8 +42,8 @@ exports.userQueries= class{
     }
     static getOneUserId(data){
         return new Promise(async(next)=>{
-            User.findById(data).then((user)=>{
-                user.status= 'Offline'
+            User.findById(data.id).then((user)=>{
+                user.status= data.status
                 user.save()
                 next({ user})
             }).catch((err)=>{
@@ -58,6 +58,11 @@ exports.userQueries= class{
                     users
                 )
             })
+        })
+    }
+    static getUpdateStatus(){
+        return new Promise(async(next)=>{
+            
         })
     }
 }

@@ -8,9 +8,24 @@
         location.href= "/chat"
     })
     }
+    const statuss= (data)=>{
+        socket.emit('statusChange',data)
+    }
+    socket.on('refreshStatus',(data)=>{
+        let status= document.querySelector(`.a${data.id}`)
+            status.classList.forEach(clas=>{
+                if(clas==='online'|| clas==='away'||clas==='busy'|| clas==='offline'){
+                    status.classList.remove(clas)
+                }
+            })
+            status.classList.add(data.status)
+        
+    })
+
     socket.on('userDeco',(data)=>{
         document.querySelector('.alert-success p').textContent=`${data.pseudo} vient de ce connecte`
     })
+
     let monId
     function sendMessage(id){
         monId=id
@@ -26,7 +41,6 @@
       
     }
     socket.on('evoiMssage',(data)=>{
-        console.log(data)
         if (monId===data.Users) {
             let messages=`<li class="replies"><img src="<%= user.image%>" alt="" /><p>  ${data.message} </p></li>`
             let ul= document.querySelector('.messages ul').innerHTML.split()
@@ -42,7 +56,8 @@
         } else {
             let messages=`<li class="sent"><img src="<%= user.image%>" alt="" /><p>  ${data.message} </p></li>`
             let ul= document.querySelector('.messages ul').innerHTML.split()
-            document.querySelector('.messages ul').innerHTML=ul.push(messages).toString()
+            ul.push(messages).toString()
+            document.querySelector('.messages ul').innerHTML=ul
             document.querySelector('.message-input input').value=null;
             // document.querySelector('.contact.active .preview').innerHTML='<span>You: </span>' + data.message;
             document.querySelector(".messages").animate({ scrollTop: document.height});
@@ -53,7 +68,6 @@
         let input = document.querySelector(".message-input input")
         input.addEventListener('keyup',(e)=>{
             socket.emit('userWrit')
-           console.log(e)
+           
         })
     }
-    

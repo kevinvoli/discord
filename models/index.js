@@ -1,13 +1,13 @@
 let users = require('../schema/users').SchemaUsers
 let message = require('../schema/users').modelsMessage
-let reponse = require('../schema/users').ModelReponse
+// let reponse = require('../schema/users').ModelReponse
+let seveur= require('../schema/users').modelsServeur
 
 
-exports.User= mongoose.model('User-ref',users) 
-message.plugin(relationship,{relationshipPathName:'Users' })
-exports.Message=mongoose.model('message-ref',message)
+exports.User= mongoose.model('User',users)
 
-reponse.plugin(relationship,{relationshipPathName:['Users','Messages']})
-exports.Reponse=mongoose.model('reponse-ref',reponse)
+exports.Message=mongoose.model('Message',message)
 
+// exports.Reponse=mongoose.model('Reponse',reponse)
 
+exports.Serveur=mongoose.model('Serveur',seveur)
