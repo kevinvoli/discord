@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="/public/statlog/vendor/bootstrap/css/bootstrap.min.css">
+<script src="/public/statlog/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="/public/statlog/vendor/bootstrap/js/popper.min.js"></script>
+<script src="/public/statlog/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<!DOCTYPE html><html class=''>
+<head>
+    <meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+
+<script src="https://use.typekit.net/hoy3lrg.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+<link rel="stylesheet" href="/public/statlog/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/public/css/styles.css">
+</head><body>
+  
+<!-- 
+
+A concept for a chat interface. 
+
+Try writing a new message! :)
+
+
+Follow me here:
+Twitter: https://twitter.com/thatguyemil
+Codepen: https://codepen.io/emilcarlsson/
+Website: http://emilcarlsson.se/
+
+-->
+
+<div id="frame">
+    <div id="sidepanel">
+        <div id="profile">
+            <div class="wrap">
+                <img id="profile-img" src="<%=user.image %>" class="online" alt="" />
+                <p><%= user.pseudo%></p>
+                <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+                <div id="status-options">
+                    <ul>
+                        <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+                        <li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
+                        <li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
+                        <li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
+                    </ul>
+                </div>
+                <div id="expanded">
+                    <label for="facebook"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+                    <input name="facebook" type="text" value="mikeross" />
+                    <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+                    <input name="twitter" type="text" value="ross81" />
+                     <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i>
+                    </label>
+                    <button class="deconnection" onclick="deconection('<%=user._id%>')" >deconnection</button>
+
+               
+                </div>
+            </div>
+        </div>
+        <div id="search">
+            <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+            <input type="text" placeholder="Search contacts..." />
+        </div>
+
+        <div id="contacts">
+               
+        <ul>
+                <div class="alert alert-success" >
+                        <p></p>
+                </div>
+            <% users.forEach(function(User){ %>
+                <% if(User._id != user._id) {%>
+                   
+                <li class="contact">
+                        <div class="wrap">
+                            <span class="contact-status <%=User.status %>  a<%=User._id %> " ></span>
+                            <img src="<%=User.image %>" alt="" />
+                            <div class="meta">
+                                <p class="name"><%=User.pseudo%></p>
+                                <p class="preview"><%=User.number%></p>
+                            </div>
+                        </div>
+                    </li>
+            
+
+        </ul>
+        </div>
+
+        <div id="bottom-bar">
+            <button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+            <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span> <a href="http:/"></a> Settings</span></button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contact-profile">
+            <img src="<%=user.image %>" alt="" />
+            <p>Harvey Specter</p>
+            <div class="social-media">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="messages">
+            <ul>
+                <% messages.forEach(function(message){%>
+                    <% if(message.Users._id != user._id) {%>
+
+                    <li class="sent">
+                            <img src="<%=message.Users.image%>" alt="" />
+                            <p><%= message.message%></p>                    
+                    </li>
+                    <%} else {  %>
+
+                        <li class="replies">
+                                <img src="<%=message.Users.image%>" alt="" />
+                                <p><%= message.message%></p>
+                        </li>
+                    <%  }%>
+                <%})%>
+
+
+            </ul>
+        </div>
+        <div class="message-input">
+            
+            <form  class="envoie">
+            <div class="wrap">
+            <input class="messageEnv" type="text" id="message" placeholder="Write your message..." />
+            <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+            <button data-id="<%= user._id %>"  class="submit mess" ><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/public/js/logique.js"></script>
+<script src="/public/js/socket.js"></script>
+<!-- <script src="/public/statlog/js/main.js"></script> -->
+<script src="/public/js/message.js"></script>
+
+</body></html>

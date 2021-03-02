@@ -1,4 +1,8 @@
 document.querySelector(".messages").animate({ scrollTop: document });
+let messa=  document.querySelector(".messages")
+document.querySelector(".messages").scrollTop=messa.scrollTopMax
+
+
 
 document.querySelector("#profile-img").addEventListener('click',(e)=> {
     document.querySelector("#status-options").classList.toggle("active");

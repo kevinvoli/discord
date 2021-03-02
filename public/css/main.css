@@ -1,0 +1,246 @@
+@import url(data.css);
+
+*, body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* background-color: var(--color-message); */
+}
+body{
+    background-color: var(--color-bg);
+    /* overflow: hidden; */
+   
+}
+
+.main{
+    margin: auto 100px;
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: #FFF;
+    height: 100vh;
+}
+.leftAside {
+    width: 300px;
+    display: flex;
+    flex-flow: column;
+    max-height: 100vh ;
+    background-color: var(--color-aside);
+}
+
+.leftAside .details{
+    width: 100%;
+    margin-bottom: 5px;
+    border-bottom: solid 2px rgb(148, 150, 150) ;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.leftAside .content{
+    display: flex;
+    flex-flow: row nowrap;
+    position:relative;
+    overflow-x: hidden;
+}
+.wrap{
+    display: flex;
+    flex-flow: row wrap;
+}
+.column{
+    display: flex;
+    flex-direction: column;
+}
+.contact{
+    cursor: pointer;
+}
+
+.serveur{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 90px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.serveur::-webkit-scrollbar{
+    width: 5px;
+    display: none;
+}
+.serveur::-webkit-scrollbar-thumb{
+    border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.avatare{
+    width: var(--size-avatar);
+    height: var(--size-avatar) ;
+    border-radius: 50%;
+}
+.serveur .contact{
+    /* background-color: #FFF; */
+    margin-bottom: 10px;
+}
+.contact{
+    margin: 5px 10px;
+}
+hr{
+    width: 80%;
+    margin:5px ;
+    background-color: rgb(170, 169, 170);
+    display: none;
+}
+
+
+/* debut salon */
+.salon{
+    display: flex;
+    flex-flow: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 200px;
+}
+.salon .contact{
+    background-color: #FFF;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.salon .text{
+    display: flex ;
+    flex-flow: row nowrap;
+    margin-top: 5px;
+}
+.salon .text small{
+    color: rgb(153, 168, 168);
+}
+.salon .text span{
+    font-size: 10px;
+    font-weight: bold;
+    display: block;
+}
+.salon .text span.heur{
+    color: rgb(115, 117, 117);
+
+}
+.salon .text span.alert{
+    color: rgba(25, 216, 72, 0.705);
+    margin: 10px;
+}
+
+.main-section{
+    width: 550px;
+    display: flex;
+    flex-flow: column;
+    border: 1px solid rgb(223, 226, 226);
+    position:relative;
+}
+.main-section .header{
+    background-color: var(--color-buttom);
+    padding: 5px;
+}
+
+.main-section .chat-box{
+    overflow-x: hidden;
+    overflow-y: scroll;
+   
+}
+.main-section .message-box {
+    display: flex;
+    margin: 10px 15px;
+}
+
+.main-section .message-box.envoie{
+    border-radius: 5px;
+    flex-flow: row-reverse nowrap;
+}
+.main-section .message-box.envoie .message-text{
+    background-color: rgb(130, 231, 214);
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.main-section .message-box.recue{
+    flex-flow: row nowrap;
+    border-radius: 5px;
+}
+.main-section .message-box.recue .message-text{
+    background-color: rgb(52, 165, 67);
+    border-radius: 10px;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.main-section .message-input{
+    height: 70px;  
+    border-radius: 5px;
+}
+.main-section .message-input .input-box{
+    display: flex;
+    align-items: flex-start;
+}
+.message-input form .input{
+    background-color: #fbfbfb;
+    width: 85%;
+    height:70px;
+    border: 2px solid #eee;
+    padding: 15px;
+    font-size: 15px;
+    resize: none;
+}
+
+.message-input form button{
+    padding: 15px;
+    height: 70px;
+    background-color: rgb(0, 204, 255);
+}
+
+
+
+.connecte{
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: var(--color-aside);
+}
+
+.connecte .contact{
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: #FFF;
+    border-radius: 5px;
+    padding: 5px;
+
+}
+
+.connecte .text{
+    display: flex ;
+    flex-flow: row nowrap;
+    margin-top: 5px;
+}
+.connecte .text small{
+    color: rgb(153, 168, 168);
+}
+.connecte .text span{
+    font-size: 10px;
+    font-weight: bold;
+    display: blocky;
+}
+.connecte .text span.heur{
+    color: rgb(115, 117, 117);
+
+}
+.connecte .text span.alert{
+    color: rgba(25, 216, 72, 0.705);
+    margin: 10px;
+}

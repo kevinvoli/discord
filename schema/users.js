@@ -13,6 +13,14 @@ exports.SchemaUsers= new mongoose.Schema({
   dateUp:{type:Date,default:Date.now},
   
 })
+exports.ModelSalon= new mongoose.Schema({
+  nom:{type: String, default:''},
+  description:{type:String, default:''},
+  Server: { type:mongoose.Schema.ObjectId, ref:"Serveur", childPath:"salon" },
+  users:{type:mongoose.Schema.ObjectId, ref:'User'},
+  dateAt:{type:Date, default:Date.now},
+  dateUp:{type:Date,default:Date.now},
+})
 
 exports.modelsParticipant= new mongoose.Schema({
   id_Serveur:[{type:mongoose.Schema.ObjectId, ref: 'Serveur'}],
@@ -33,14 +41,9 @@ exports.modelsMessage= new mongoose.Schema({
     message:{type: String, default:''},
     Users: { type:mongoose.Schema.ObjectId, ref:"User", childPath:"message" },
     serveur:{type:mongoose.Schema.ObjectId, ref: "Serveur", childPath:"message"},
+    salon:{type:mongoose.Schema.ObjectId, ref: "Salon"},
     DateAt: {type:Date, default:Date.now},
     DateUp: {type:Date, defailt:Date.now}
   })
-// exports.ModelReponse= new mongoose.Schema({
-//   reponse:{type: String, default:''},
-//   Date: {type:Date, default:Date.now},
-//   Users: { type:mongoose.Schema.ObjectId, ref:"User-ref", childPath:"reponse" },
-//   Messages: { type:mongoose.Schema.ObjectId, ref:"message-ref", childPath:"reponse" }
-// 
-// })
+
 
