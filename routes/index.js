@@ -1,11 +1,11 @@
 const express= require('express')
 const {userQueries}= require('../controllers/user.controllers')
 const {messageQueries}= require('../controllers/message.controllers')
+const {ServeurQuery}= require("../controllers/serveur.controller")
 const router =new express.Router()
 
 router.route('/')
 .get((req,res)=>{
-    console.log('bien validé',req.session)
     if (req.session.chat) {
         res.redirect('/chat')
     }
@@ -22,10 +22,12 @@ router.route('/chat')
     let users= await userQueries.getallUsers()
     if(req.session.chat){
         let  message=await messageQueries.getAllMassage()
+        let Serveur= await ServeurQuery.getAllServeur()
         res.render('chat',{
             users:users,
             user :req.session.chat,
-            messages:message
+            messages:message,
+            serveurs:Serveur.serveur
         })
     }else{
         res.redirect('/')

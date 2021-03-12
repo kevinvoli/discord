@@ -1,22 +1,40 @@
 const Message= require('../models/index').Message
 const User=require('../models/index').User
+const Salon= require("../models/index").Salon
+const {SalonQuery}= require('../controllers/salon.controller')
 new Message({})
 exports.messageQueries= class{
     static setMesage(data){
-        console.log(data)
         return new Promise(async(next)=>{
-            const message = new Message({
+            await new Message({
                 message:data.message,
-                Users:data.id 
-            }).save().then((message)=>{
-                User.update({_id:data.id},{$push:{messag:message._id}})
-                console.log("LES MESSAGES USERRRRR",message)
-                    next(message)
-
+                Users:data.id,
+                serveur:data.serveur,
+                salon:data.salon
+            }).save().populate('Users').execPopulate().then(async(message)=>{
+                
+                User.updateOne(
+                    {"_id":data.id},{$push:{"message":message._id}
+                })
+                Salon.updateOne(
+                    {"_id":data.salon},{$push:{"messages":message._id}}).then((zzz)=>{ 
+                })
+                
+                next(message)
             }).catch((err)=>{
-                console.log("USERRRRR",message)
+                
                 next(err)
          })       
+        })
+    }
+    static getOneMessage(data){
+       
+        return new Promise(async(next)=>{
+            console.log("Mes mesaage:",data) 
+            Salon.findOne({"_id":data}).then((salon)=>{
+                
+                next(salon)
+            })
         })
     }
     static getAllMassage(){

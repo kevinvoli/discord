@@ -14,147 +14,69 @@
         
         <aside class="leftAside">
             <div class="details">
-                <h3>salut tous les monde</h3>
+                <div id="profile">
+                    <div class="wrap">
+                        <img id="profile-img" src="<%=user.image %>" class="online" alt="" />
+                        <p><%= user.pseudo%></p>
+                        <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+                        <div id="status-options">
+                            <ul>
+                                <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+                                <li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
+                                <li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
+                                <li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
+                            </ul>
+                        </div>
+                        <div id="expanded">
+                            <label for="facebook"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+                            <input name="facebook" type="text" value="mikeross" />
+                            <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+                            <input name="twitter" type="text" value="ross81" />
+                             <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i>
+                            </label>
+                            <button class="deconnection" onclick="deconection('<%=user._id%>')" >deconnection</button>
+        
+                       
+                        </div>
+                    </div>
+                </div>
+                <div class="ajoute">
+                    <input data-id="" class="new-ajoute" type="text">
+                    <button onclick="newAjoute()" class="new"><span><i class="fa fa-check-square" aria-hidden="true"></i>
+                    </span></button>
+                    <button><span><i class="fa fa-window-close" aria-hidden="true"></i>
+                    </span></button>
+                </div>
+                <div class="action">
+                    <button class="new-salon"><span><i class="fa fa-users" aria-hidden="true"></i></span></button>
+                    <button class="new-server"><span><i class="fa fa-server" aria-hidden="true"></span></i>
+                    </button>
+                    <button class="deconnection"><span><i class="fa fa-power-off" aria-hidden="true"></i>
+                    </span></button>
+                </div>
+                <div class="contener-recherche">
+                    <form class="form-recherche" action="">
+                        <input class="recherche"  type="text">
+                        <input type="hidden">
+                        <button><span><i class="fa fa-search" aria-hidden="true"></i>
+                        </span></button>
+                    </form>
+                </div>
             </div>
-            <div class="content">
-                <div class="serveur">
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare"  src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                         
-                   <hr>
-                   <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-                    <div class="wrap contact">
-                        <span class="contact-status" ></span>
-                        <img class="avatare" src="public/images/photoKevin.png" alt="serveur" />
-                    </div>
-                    <hr>
-
-                               
-                    </div>
+            <div class="content" id="contacts">
+                <div class="serveur" id="serveur">
+                    <% serveurs.forEach(function(Serveur){%>                 
+                        <div class="wrap contact <%=Serveur.status%>" data-id="<%=Serveur._id%>" data-serveur="<%=Serveur.nom%>">
+                            <span class="contact-status" ></span>
+                            <img class="avatare" src="<%=Serveur.image%>" alt="serveur" />
+                        </div>          
+                    <%})%>              
+                </div>
                     <!-- fin -->
 
                     <!-- debut salon -->
-                <div class="salon">
-                   
-                        <div class="wrap contact">
-                            <div class="text">
-                                <div >
-                                    <p class="name">salon dev</p>
-                                    <small>salut mon free...</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrap contact">
-                            <div class="text">
-                                <div >
-                                    <p class="name">salon python</p>
-                                    <small>salut mon free...</small>
-                                </div>
-                              
-                            </div>
-                        </div>
-                 
-                     
-        
-                                        
+                <div class="salon" id="salon">    
+            
                 </div>
 
             </div>
@@ -167,7 +89,7 @@
                 </div>
             </header>
             
-            <div class="chat-box">
+            <div class="chat-box" id="chat-box">
              
               
             <% messages.forEach(function(message){%>
@@ -212,8 +134,8 @@
             </div>
             
         </section>
-        <aside class="rigthAside">
-          <div class="connecte">  
+        <aside class="rigthAside" >
+          <div class="connecte mambre" id="mambre">  
             <% users.forEach(function(User){ %>
                 <% if(User._id != user._id) {%>
                     <div class=" contact">
@@ -244,7 +166,8 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/public/js/logique.js"></script>
 <script src="/public/js/socket.js"></script>
-<!-- <script src="/public/statlog/js/main.js"></script> -->
 <script src="/public/js/message.js"></script>
+<script src="/public/js/select.js"></script>
+<!-- <script src="/public/statlog/js/main.js"></script> -->
 </body>
 </html>

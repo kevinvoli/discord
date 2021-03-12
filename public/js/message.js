@@ -1,6 +1,6 @@
-document.querySelector(".messages").animate({ scrollTop: document });
-let messa=  document.querySelector(".messages")
-document.querySelector(".messages").scrollTop=messa.scrollTopMax
+document.querySelector(".chat-box").animate({ scrollTop: document });
+let messa=  document.querySelector(".chat-box")
+document.querySelector(".chat-box").scrollTop=messa.scrollTopMax
 
 
 

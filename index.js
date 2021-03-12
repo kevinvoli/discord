@@ -24,6 +24,7 @@ const ejs = require('ejs')
 const route=require('./routes')
 const {userQueries}= require('./controllers/user.controllers')
 const {messageQueries}= require('./controllers/message.controllers')
+const {SalonQuery}= require('./controllers/salon.controller')
 // require('./passport/passport-local')
 
 const http= require('http').createServer(app)
@@ -49,12 +50,10 @@ app.use(route)
 
 sharedsession = require("express-socket.io-session");
 
-
 const db= require('./setting/dabase')
+const { ServeurQuery } = require('./controllers/serveur.controller')
 db()
-
  // create reusable transporter object using the default SMTP transport
-
 
  const register= io.of('/register')
 register.on('connection',(socket)=>{
@@ -68,7 +67,6 @@ const inscription = io.of('/').use(sharedsession(session));
 inscription.on('connection',(socket)=>{  
 
     socket.on('connecte',async(data)=>{
-        console.log(data)
         const result= await userQueries.getUsers(data)
         if (result.etat){
             let erreur= 'error'
@@ -76,7 +74,6 @@ inscription.on('connection',(socket)=>{
         }else{
             socket.handshake.session.chat= result
             socket.handshake.session.save();
-            console.log('ma session socket:',socket.handshake.session)
             socket.emit('connecte',result.etat)
         }
     })
@@ -85,7 +82,6 @@ const deconection = io.of('/chat').use(sharedsession(session));
 deconection.on('connection',(socket)=>{
     deconection.emit('userDeco',socket.handshake.session.chat)
     socket.on('deco',async(data)=>{
-        console.log(data)
         if(socket.handshake.session.chat){
             const res= await userQueries.getOneUserId(data)
             delete socket.handshake.session.chat
@@ -93,11 +89,13 @@ deconection.on('connection',(socket)=>{
         }
         socket.emit('deconecter')
     })
+
     socket.on('sendMessage',async(data)=>{
-        console.log("LES DATA",data)
         const result= await messageQueries.setMesage(data)
         console.log("LE MESSAGE",result)
-        deconection.emit('evoiMssage',result)
+        const message= await messageQueries.getOneMessage(result._id)
+
+        socket.emit('evoiMssage',result)
     })
     socket.on('statusChange',async(status)=>{
         const data= {
@@ -110,8 +108,35 @@ deconection.on('connection',(socket)=>{
             status: res.user.status
         }
 
-        console.log('status change avec success',res)
         socket.broadcast.emit('refreshStatus',donne)
+    })
+    socket.on("entre_salon", async(Lesalon)=>{
+        
+        const message= await SalonQuery.getOneSalon(Lesalon)
+        let nom= message.salon._id
+        socket.join(nom)
+        console.log("ont est la salon",socket.rooms)
+    })
+    socket.on("newServeur",async(serveurs)=>{
+        const data={
+            nom:serveurs,
+            user:socket.handshake.session.chat._id
+        }
+        const serveur= await ServeurQuery.setServeur(data)
+        socket.emit("newServeur",serveur)
+    })
+    socket.on("newSalon",async(data)=>{
+        const donne={
+            nom:data.value,
+            user:socket.handshake.session.chat._id,
+            id:data.serveur
+        }
+        const salon= await SalonQuery.setSalon(donne)
+        socket.emit("newSalon",salon)
+    })
+    socket.on("listeSalon",async(data)=>{
+        let serveur= await ServeurQuery.getOneServeur(data)
+        socket.emit("listeSalon", serveur.serveur.salon)
     })
 })
 const port= 3000
